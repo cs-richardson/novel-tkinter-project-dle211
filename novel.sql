@@ -1,0 +1,41 @@
+DROP TABLE IF EXISTS Purchases;
+DROP TABLE IF EXISTS Consumers;
+DROP TABLE IF EXISTS Novels;
+DROP TABLE IF EXISTS Authors;
+
+CREATE TABLE Consumers
+(
+	ConsumerID INTEGER NOT NULL,
+	ConsumerName VARCHAR(50) NOT NULL,
+	DateOfBirth DATE NOT NULL,
+	PRIMARY KEY (ConsumerID)
+);
+
+CREATE TABLE Novels
+(
+	NovelID INTEGER NOT NULL,
+	AuthorID INTEGER NOT NULL,
+	NovelName VARCHAR(50) NOT NULL,
+	DateOfPublication DATE NOT NULL,
+	PRIMARY KEY (NovelID),
+	FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+CREATE TABLE Authors
+(
+	AuthorID INTEGER NOT NULL,
+	AuthorName VARCHAR(50) NOT NULL,
+	DateOfBirth DATE NOT NULL,
+	PRIMARY KEY (AuthorID)
+);
+
+CREATE TABLE Purchases
+(
+	ConsumerID INTEGER NOT NULL,
+	NovelID INTEGER NOT NULL,
+	DateOfPurchase DATE NOT NULL,
+	Quantity INTEGER NOT NULL,
+	PRIMARY KEY (ConsumerID, NovelID, DateOfPurchase),
+	FOREIGN KEY (ConsumerID) REFERENCES Consumers(ConsumerID),
+	FOREIGN KEY (NovelID) REFERENCES Novels(NovelID)
+);
